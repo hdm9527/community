@@ -11,3 +11,15 @@
 ## 工具
 https://git-scm.com/
 
+## 脚本
+```sql
+CREATE TABLE `user` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `account_id` varchar(100) DEFAULT NULL,
+    `name` varchar(50) DEFAULT NULL,
+    `token` char(36) DEFAULT NULL,
+    `gmt_create` datetime DEFAULT NULL,
+    `gmt-modified` datetime DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```

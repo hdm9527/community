@@ -7,7 +7,7 @@ github:
     uri: http://localhost:8080/callback
 spring:
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:~/MyCommunity;OLD_INFORMATION_SCHEMA=TRUE
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/community
     username: root
     password: 123456
