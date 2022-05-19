@@ -30,9 +30,10 @@ public class GithubProvider {
 
     public GithubUser getUser(String accessToken) {
         OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(20, TimeUnit.SECONDS)
-                .writeTimeout(20, TimeUnit.SECONDS)
-                .readTimeout(20, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .callTimeout(60, TimeUnit.SECONDS)
                 .build();
         Request request = new Request.Builder()
                 .addHeader("Authorization", "token " + accessToken)
@@ -40,8 +41,8 @@ public class GithubProvider {
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            String string = response.body().string();
-            return JSON.parseObject(string, GithubUser.class);
+            String githubInfo = response.body().string();
+            return JSON.parseObject(githubInfo, GithubUser.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
