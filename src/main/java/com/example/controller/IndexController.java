@@ -1,9 +1,7 @@
 package com.example.controller;
 
-import com.example.dto.QuestionDTO;
-import com.example.entity.Question;
+import com.example.dto.PaginationDTO;
 import com.example.entity.User;
-import com.example.mapper.QuestionMapper;
 import com.example.mapper.UserMapper;
 import com.example.service.QuestionService;
 import org.springframework.stereotype.Controller;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Controller
 public class IndexController {
@@ -28,7 +25,7 @@ public class IndexController {
     @GetMapping("/")
     public String index(HttpServletRequest request,
                         Model model,
-                        @RequestParam(value = "page", defaultValue = "0") Integer page,
+                        @RequestParam(value = "page", defaultValue = "1") Integer page,
                         @RequestParam(value = "size", defaultValue = "5") Integer size) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length != 0) {
@@ -41,8 +38,8 @@ public class IndexController {
                 }
             }
         }
-        List<QuestionDTO> questionList = questionService.list(page, size);
-        model.addAttribute("questions", questionList);
+        PaginationDTO pagination = questionService.list(page, size);
+        model.addAttribute("pagination", pagination);
         return "index";
     }
 }
