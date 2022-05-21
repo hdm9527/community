@@ -3,6 +3,7 @@
 ## 资料
 [Spring 文档](https://spring.io/guides)  
 [Spring Web](https://spring.io/guides/gs/serving-web-content)  
+[Thymeleaf](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html)  
 [ElasticSearch 社区](https://elasticsearch.cn)  
 [Github Deploy key](https://docs.github.com/cn/developers/overview/managing-deploy-keys#deploy-keys)  
 [BootStrap](https://v3.bootcss.com/)  
