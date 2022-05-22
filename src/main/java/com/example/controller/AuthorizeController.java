@@ -5,6 +5,7 @@ import com.example.dto.GithubUser;
 import com.example.entity.User;
 import com.example.mapper.UserMapper;
 import com.example.provider.GithubProvider;
+import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,7 @@ public class AuthorizeController {
     private String redirectUri;
 
     @Resource
-    UserMapper userMapper;
+    UserService userService;
 
     @GetMapping("/callback")
     public String callback(@RequestParam("code") String code,
@@ -50,10 +51,8 @@ public class AuthorizeController {
             user.setName(githubUser.getLogin());
             String token = UUID.randomUUID().toString();
             user.setToken(token);
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
             user.setAvatarUrl(githubUser.getAvatarUrl());
-            userMapper.addUser(user);
+            userService.createOrUpdate(user);
             response.addCookie(new Cookie("token", token));
         }
         return "redirect:/";
