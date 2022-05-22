@@ -18,6 +18,6 @@ public interface UserMapper {
     @Select("select * from user where account_id = #{accountId}")
     User getUserByAccountId(@Param("accountId") String accountId);
 
-    @Update("update user set name = #{name}, token = #{token}, gmt_modified = #{getModified}, avatar_url = #{avatarUrl} where id = #{id}")
-    void updateUser(User dbUser);
+    @Update("update user set name = #{name}, token = #{token}, gmt_modified = #{gmtModified}, avatar_url = #{avatarUrl} where id = #{id}")
+    void updateUser(User user);
 }

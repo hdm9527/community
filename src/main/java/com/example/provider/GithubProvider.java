@@ -1,12 +1,13 @@
 package com.example.provider;
 
-import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson.JSON;
 import com.example.dto.AccessTokenDTO;
 import com.example.dto.GithubUser;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -41,7 +42,7 @@ public class GithubProvider {
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            String githubInfo = response.body().string();
+            String githubInfo = Objects.requireNonNull(response.body()).string();
             return JSON.parseObject(githubInfo, GithubUser.class);
         } catch (IOException e) {
             e.printStackTrace();
