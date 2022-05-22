@@ -1,7 +1,7 @@
 package com.example.controller;
 
 import com.example.dto.PaginationDTO;
-import com.example.entity.User;
+import com.example.model.User;
 import com.example.service.QuestionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

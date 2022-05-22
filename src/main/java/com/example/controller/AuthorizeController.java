@@ -2,8 +2,7 @@ package com.example.controller;
 
 import com.example.dto.AccessTokenDTO;
 import com.example.dto.GithubUser;
-import com.example.entity.User;
-import com.example.mapper.UserMapper;
+import com.example.model.User;
 import com.example.provider.GithubProvider;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
