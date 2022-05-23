@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.example.model.Question">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="gmt_create" jdbcType="BIGINT" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="BIGINT" property="gmtModified" />
     <result column="creator" jdbcType="INTEGER" property="creator" />
@@ -11,9 +12,6 @@
     <result column="view_count" jdbcType="INTEGER" property="viewCount" />
     <result column="like_count" jdbcType="INTEGER" property="likeCount" />
     <result column="tag" jdbcType="VARCHAR" property="tag" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.model.Question">
-    <result column="description" jdbcType="LONGVARCHAR" property="description" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -74,28 +72,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, title, gmt_create, gmt_modified, creator, comment_count, view_count, like_count, 
-    tag
+    id, title, description, gmt_create, gmt_modified, creator, comment_count, view_count, 
+    like_count, tag
   </sql>
-  <sql id="Blob_Column_List">
-    description
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="com.example.model.QuestionExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from question
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" parameterType="com.example.model.QuestionExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -110,11 +89,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from question
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -129,14 +106,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.example.model.Question">
-    insert into question (id, title, gmt_create, 
-      gmt_modified, creator, comment_count, 
-      view_count, like_count, tag, 
-      description)
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=BIGINT}, 
-      #{gmtModified,jdbcType=BIGINT}, #{creator,jdbcType=INTEGER}, #{commentCount,jdbcType=INTEGER}, 
-      #{viewCount,jdbcType=INTEGER}, #{likeCount,jdbcType=INTEGER}, #{tag,jdbcType=VARCHAR}, 
-      #{description,jdbcType=LONGVARCHAR})
+    insert into question (id, title, description, 
+      gmt_create, gmt_modified, creator, 
+      comment_count, view_count, like_count, 
+      tag)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT}, #{creator,jdbcType=INTEGER}, 
+      #{commentCount,jdbcType=INTEGER}, #{viewCount,jdbcType=INTEGER}, #{likeCount,jdbcType=INTEGER}, 
+      #{tag,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.example.model.Question">
     insert into question
@@ -146,6 +123,9 @@
       </if>
       <if test="title != null">
         title,
+      </if>
+      <if test="description != null">
+        description,
       </if>
       <if test="gmtCreate != null">
         gmt_create,
@@ -168,9 +148,6 @@
       <if test="tag != null">
         tag,
       </if>
-      <if test="description != null">
-        description,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -178,6 +155,9 @@
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
       </if>
       <if test="gmtCreate != null">
         #{gmtCreate,jdbcType=BIGINT},
@@ -200,9 +180,6 @@
       <if test="tag != null">
         #{tag,jdbcType=VARCHAR},
       </if>
-      <if test="description != null">
-        #{description,jdbcType=LONGVARCHAR},
-      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.example.model.QuestionExample" resultType="java.lang.Long">
@@ -219,6 +196,9 @@
       </if>
       <if test="row.title != null">
         title = #{row.title,jdbcType=VARCHAR},
+      </if>
+      <if test="row.description != null">
+        description = #{row.description,jdbcType=VARCHAR},
       </if>
       <if test="row.gmtCreate != null">
         gmt_create = #{row.gmtCreate,jdbcType=BIGINT},
@@ -241,26 +221,7 @@
       <if test="row.tag != null">
         tag = #{row.tag,jdbcType=VARCHAR},
       </if>
-      <if test="row.description != null">
-        description = #{row.description,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="example != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update question
-    set id = #{row.id,jdbcType=INTEGER},
-      title = #{row.title,jdbcType=VARCHAR},
-      gmt_create = #{row.gmtCreate,jdbcType=BIGINT},
-      gmt_modified = #{row.gmtModified,jdbcType=BIGINT},
-      creator = #{row.creator,jdbcType=INTEGER},
-      comment_count = #{row.commentCount,jdbcType=INTEGER},
-      view_count = #{row.viewCount,jdbcType=INTEGER},
-      like_count = #{row.likeCount,jdbcType=INTEGER},
-      tag = #{row.tag,jdbcType=VARCHAR},
-      description = #{row.description,jdbcType=LONGVARCHAR}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -269,6 +230,7 @@
     update question
     set id = #{row.id,jdbcType=INTEGER},
       title = #{row.title,jdbcType=VARCHAR},
+      description = #{row.description,jdbcType=VARCHAR},
       gmt_create = #{row.gmtCreate,jdbcType=BIGINT},
       gmt_modified = #{row.gmtModified,jdbcType=BIGINT},
       creator = #{row.creator,jdbcType=INTEGER},
@@ -285,6 +247,9 @@
     <set>
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
       </if>
       <if test="gmtCreate != null">
         gmt_create = #{gmtCreate,jdbcType=BIGINT},
@@ -307,28 +272,13 @@
       <if test="tag != null">
         tag = #{tag,jdbcType=VARCHAR},
       </if>
-      <if test="description != null">
-        description = #{description,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.model.Question">
-    update question
-    set title = #{title,jdbcType=VARCHAR},
-      gmt_create = #{gmtCreate,jdbcType=BIGINT},
-      gmt_modified = #{gmtModified,jdbcType=BIGINT},
-      creator = #{creator,jdbcType=INTEGER},
-      comment_count = #{commentCount,jdbcType=INTEGER},
-      view_count = #{viewCount,jdbcType=INTEGER},
-      like_count = #{likeCount,jdbcType=INTEGER},
-      tag = #{tag,jdbcType=VARCHAR},
-      description = #{description,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.model.Question">
     update question
     set title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
       gmt_create = #{gmtCreate,jdbcType=BIGINT},
       gmt_modified = #{gmtModified,jdbcType=BIGINT},
       creator = #{creator,jdbcType=INTEGER},
@@ -338,22 +288,6 @@
       tag = #{tag,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByExampleWithBLOBsWithRowbounds" parameterType="com.example.model.QuestionExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from question
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExampleWithRowbounds" parameterType="com.example.model.QuestionExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
