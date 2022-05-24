@@ -13,9 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping({"${server.error.path:${error.path:/error}}"})
 public class CustomizeErrorController implements ErrorController {
 
-    @RequestMapping(
-            produces = {"text/html"}
-    )
+    @RequestMapping(produces = {"text/html"})
     public ModelAndView errorHtml(HttpServletRequest request, Model model) {
         HttpStatus status = this.getStatus(request);
         if (status.is4xxClientError()) {

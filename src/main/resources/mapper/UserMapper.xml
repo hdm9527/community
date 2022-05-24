@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="com.example.model.User">
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="BIGINT" property="id" />
     <result column="account_id" jdbcType="VARCHAR" property="accountId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="token" jdbcType="CHAR" property="token" />
@@ -85,15 +85,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from user
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from user
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.example.model.UserExample">
     delete from user
@@ -105,7 +105,7 @@
     insert into user (id, account_id, name, 
       token, gmt_create, gmt_modified, 
       avatar_url)
-    values (#{id,jdbcType=INTEGER}, #{accountId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{accountId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{token,jdbcType=CHAR}, #{gmtCreate,jdbcType=BIGINT}, #{gmtModified,jdbcType=BIGINT}, 
       #{avatarUrl,jdbcType=VARCHAR})
   </insert>
@@ -136,7 +136,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=BIGINT},
       </if>
       <if test="accountId != null">
         #{accountId,jdbcType=VARCHAR},
@@ -168,7 +168,7 @@
     update user
     <set>
       <if test="row.id != null">
-        id = #{row.id,jdbcType=INTEGER},
+        id = #{row.id,jdbcType=BIGINT},
       </if>
       <if test="row.accountId != null">
         account_id = #{row.accountId,jdbcType=VARCHAR},
@@ -195,7 +195,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update user
-    set id = #{row.id,jdbcType=INTEGER},
+    set id = #{row.id,jdbcType=BIGINT},
       account_id = #{row.accountId,jdbcType=VARCHAR},
       name = #{row.name,jdbcType=VARCHAR},
       token = #{row.token,jdbcType=CHAR},
@@ -228,7 +228,7 @@
         avatar_url = #{avatarUrl,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.model.User">
     update user
@@ -238,7 +238,7 @@
       gmt_create = #{gmtCreate,jdbcType=BIGINT},
       gmt_modified = #{gmtModified,jdbcType=BIGINT},
       avatar_url = #{avatarUrl,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByExampleWithRowbounds" parameterType="com.example.model.UserExample" resultMap="BaseResultMap">
     select

@@ -11,7 +11,7 @@ public interface QuestionMapper {
 
     int deleteByExample(QuestionExample example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(Question row);
 
@@ -21,7 +21,7 @@ public interface QuestionMapper {
 
     List<Question> selectByExample(QuestionExample example);
 
-    Question selectByPrimaryKey(Integer id);
+    Question selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("row") Question row, @Param("example") QuestionExample example);
 

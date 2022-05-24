@@ -16,6 +16,11 @@
     update question
     set
     view_count = view_count + #{viewCount ,jdbcType=INTEGER}
-    where id = #{id}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="incCommentCount" parameterType="com.example.model.Question">
+    update question
+    set comment_count = comment_count + #{commentCount,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

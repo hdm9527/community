@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 @Component
 public class GithubProvider {
@@ -21,7 +20,7 @@ public class GithubProvider {
                 .post(body)
                 .build();
         try (Response response = client.newCall(request).execute()) {
-            String accessToken = response.body().string();
+            String accessToken = Objects.requireNonNull(response.body()).string();
             return accessToken.split("&")[0].split("=")[1];
         } catch (Exception e) {
             e.printStackTrace();
@@ -30,12 +29,7 @@ public class GithubProvider {
     }
 
     public GithubUser getUser(String accessToken) {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .callTimeout(60, TimeUnit.SECONDS)
-                .build();
+        OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .addHeader("Authorization", "token " + accessToken)
                 .url("https://api.github.com/user")

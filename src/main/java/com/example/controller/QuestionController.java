@@ -1,6 +1,8 @@
 package com.example.controller;
 
 import com.example.dto.QuestionDTO;
+import com.example.exception.CustomizeErrorCode;
+import com.example.exception.CustomizeException;
 import com.example.service.QuestionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +17,7 @@ public class QuestionController {
     private QuestionService questionService;
 
     @GetMapping("/question/{id}")
-    public String question(@PathVariable("id") Integer id,
+    public String question(@PathVariable("id") Long id,
                            Model model) {
         QuestionDTO questionDTO = questionService.getQuestionById(id);
         model.addAttribute("question", questionDTO);
