@@ -2,13 +2,13 @@ server:
   port: 8080
 github:
   client:
-    id: c71a34b30bf116efe29b
-    secret: 46bf3b8743eaf30994f5c02970112ff1bb99b532
+    id: 2e11ec8f3a57099babc6
+    secret: df1ba4ea35d62d4480a6f84ff49186a14e397195
     uri: http://localhost:8080/callback
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/community?characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/community
     username: root
     password: 123456
   devtools:
