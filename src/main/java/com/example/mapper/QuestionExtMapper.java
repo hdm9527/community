@@ -2,7 +2,10 @@ package com.example.mapper;
 
 import com.example.model.Question;
 
+import java.util.List;
+
 public interface QuestionExtMapper {
-    void incView(Question question);
-    void incCommentCount(Question question);
+    int incView(Question question);
+    int incCommentCount(Question question);
+    List<Question> selectRelated(Question question);
 }

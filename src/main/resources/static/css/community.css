@@ -35,11 +35,38 @@ body {
     margin-top: 25px;
 }
 
+.question-tag {
+    margin-right: 5px;
+}
+
+.question-related {
+    line-height: 20px;
+    font-size: 14px;
+    padding-left: 0;
+    list-style: none;
+}
+
+.question-related a{
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.publish-tag-tab {
+    margin-top: 10px;
+    display: none;
+    padding-top: 10px;
+}
+
+.publish-tag-tab .label-info {
+    margin: 3px 5px;
+    white-space: normal;
+    display: inline-block;
+}
+
 .community-menu {
     margin-bottom: 15px;
     font-size: 13px;
     color: #999999;
-    display: block;
 }
 
 .jumbotron {

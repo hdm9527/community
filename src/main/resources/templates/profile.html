@@ -26,9 +26,15 @@
                         <a th:href="'/question/' + ${question.id}" th:text="${question.title}"></a>
                     </h4>
                     <span th:text="${question.description}"></span> <br>
-                    <span class="text-desc"><span th:text="${question.commentCount}"></span> 个评论 • <span
+                    <span class="text-desc">
+                        <span th:text="${question.commentCount}"></span> 个评论 • <span
                             th:text="${question.viewCount}"></span> 次浏览 • <span
-                            th:text="${#dates.format(question.gmtModified, 'yyyy-MM-dd HH:mm')}"></span></span>
+                            th:text="${#dates.format(question.gmtModified, 'yyyy-MM-dd HH:mm')}"></span> •
+                        <a class="community-menu" th:href="@{'/publish/' + ${question.id}}"
+                           th:if="${session.user != null && session.user.id == question.creator}">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true">编辑</span>
+                        </a>
+                    </span>
                 </div>
             </div>
             <nav aria-label="Page navigation">
@@ -61,8 +67,10 @@
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <div class="list-group section">
-                <a href="/profile/questions" th:class="${sectionName == 'questions'} ? 'active list-group-item' : 'list-group-item'">我的问题</a>
-                <a href="/profile/replies" th:class="${sectionName == 'replies'} ? 'active list-group-item' : 'list-group-item'">
+                <a href="/profile/questions"
+                   th:class="${sectionName == 'questions'} ? 'active list-group-item' : 'list-group-item'">我的问题</a>
+                <a href="/profile/replies"
+                   th:class="${sectionName == 'replies'} ? 'active list-group-item' : 'list-group-item'">
                     最新回复
                     <span class="badge">14</span>
                 </a>
