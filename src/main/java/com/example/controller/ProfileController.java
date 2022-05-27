@@ -1,7 +1,10 @@
 package com.example.controller;
 
+import com.example.dto.NotificationDTO;
 import com.example.dto.PaginationDTO;
+import com.example.dto.QuestionDTO;
 import com.example.model.User;
+import com.example.service.NotificationService;
 import com.example.service.QuestionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,11 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class ProfileController {
     @Resource
     private QuestionService questionService;
+    @Resource
+    private NotificationService notificationService;
 
     @GetMapping("/profile/{action}")
     public String profile(HttpServletRequest request,
@@ -30,12 +36,17 @@ public class ProfileController {
         if ("questions".equals(action)) {
             model.addAttribute("section", "questions");
             model.addAttribute("sectionName", "我的提问");
+            PaginationDTO<QuestionDTO> paginationDTO = questionService.list(user.getId(), page, size);
+            model.addAttribute("pagination", paginationDTO);
         } else if ("replies".equals(action)) {
+            PaginationDTO<NotificationDTO> paginationDTO = notificationService.list(user.getId(), page, size);
+            Long unreadCount = notificationService.unreadCount(user.getId());
             model.addAttribute("section", "replies");
+            model.addAttribute("pagination", paginationDTO);
+            model.addAttribute("unreadCount", unreadCount);
             model.addAttribute("sectionName", "最新回复");
+
         }
-        PaginationDTO paginationDTO = questionService.list(user.getId(), page, size);
-        model.addAttribute("pagination", paginationDTO);
         return "profile";
     }
 }

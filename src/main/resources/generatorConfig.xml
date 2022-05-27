@@ -6,7 +6,7 @@
 <generatorConfiguration>
     <context id="DB2Tables" targetRuntime="MyBatis3">
         <!-- 分页插件 -->
-        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
 
         <!-- 覆盖生成XML文件 -->
         <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
@@ -48,6 +48,6 @@
             <columnOverride column="description" javaType="java.lang.String" jdbcType="VARCHAR"/>
         </table>
         <table tableName="comment" domainObjectName="Comment"></table>
-
+        <table tableName="notification" domainObjectName="Notification"></table>
     </context>
 </generatorConfiguration>
