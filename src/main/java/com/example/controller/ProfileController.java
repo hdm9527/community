@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Controller
 public class ProfileController {
@@ -40,10 +39,8 @@ public class ProfileController {
             model.addAttribute("pagination", paginationDTO);
         } else if ("replies".equals(action)) {
             PaginationDTO<NotificationDTO> paginationDTO = notificationService.list(user.getId(), page, size);
-            Long unreadCount = notificationService.unreadCount(user.getId());
             model.addAttribute("section", "replies");
             model.addAttribute("pagination", paginationDTO);
-            model.addAttribute("unreadCount", unreadCount);
             model.addAttribute("sectionName", "最新回复");
 
         }

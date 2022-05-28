@@ -3,6 +3,7 @@ package com.example.interceptor;
 import com.example.model.User;
 import com.example.mapper.UserMapper;
 import com.example.model.UserExample;
+import com.example.service.NotificationService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,6 +19,8 @@ public class SessionInterceptor implements HandlerInterceptor {
 
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private NotificationService notificationService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -30,7 +33,11 @@ public class SessionInterceptor implements HandlerInterceptor {
                     userExample.createCriteria()
                             .andTokenEqualTo(token);
                     List<User> users = userMapper.selectByExample(userExample);
-                    if (users.size() != 0) request.getSession().setAttribute("user", users.get(0));
+                    if (users.size() != 0) {
+                        request.getSession().setAttribute("user", users.get(0));
+                        Long unreadCount = notificationService.unreadCount(users.get(0).getId());
+                        request.getSession().setAttribute("unreadCount", unreadCount);
+                    }
                     break;
                 }
             }
