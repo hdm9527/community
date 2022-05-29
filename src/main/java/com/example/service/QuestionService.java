@@ -134,9 +134,6 @@ public class QuestionService {
             updateQuestion.setGmtModified(System.currentTimeMillis());
             updateQuestion.setTitle(question.getTitle());
             updateQuestion.setDescription(question.getDescription());
-            updateQuestion.setCommentCount(0);
-            updateQuestion.setViewCount(0);
-            updateQuestion.setLikeCount(0);
             updateQuestion.setTag(question.getTag());
             QuestionExample questionExample = new QuestionExample();
             questionExample.createCriteria()
