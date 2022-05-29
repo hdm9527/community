@@ -5,6 +5,9 @@ github:
     id: 2e11ec8f3a57099babc6
     secret: df1ba4ea35d62d4480a6f84ff49186a14e397195
     uri: http://localhost:8080/callback
+# SM.MS图床
+smms:
+  token: YCTNnIaP6DrmPYKPJPEM0kwAAnl3lqMp
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -14,6 +17,10 @@ spring:
   devtools:
     livereload:
       enabled: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
