@@ -1,5 +1,8 @@
 ## 社区
 
+Demo：https://community.37373.xyz  
+目前只支持github登录
+
 ## 资料
 [Spring 文档](https://spring.io/guides)  
 [Spring Web](https://spring.io/guides/gs/serving-web-content)  
